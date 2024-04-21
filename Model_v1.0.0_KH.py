@@ -35,6 +35,7 @@ df_og.columns = df_og.columns.str.lower() #Main DataFrame
 #DATA PREPROCESSING
 
 df = df_og.dropna() #Drop Null Values - Main Dataframe to work from
+df
 
 
 
