@@ -20,8 +20,10 @@ from sklearn.model_selection import GridSearchCV
 1. GRAPH AESTHETIC
 """
 
-sns.set_style("darkgrid")
-sns.set_context("paper", font_scale=0.75)
+sns.set_style("white")
+sns.set_context("talk", font_scale=.8)
+palette = sns.color_palette()
+
 
 """
 2. LOADING IN DATA
@@ -78,10 +80,11 @@ auc_logistic = auc(logistic_fpr, logistic_tpr)
 logistic_auc_score = roc_auc_score(y_test, y_pred_decf)
 print(f'Logistic (Impute Method 1) AUC Score: {logistic_auc_score}')
 
-plt.figure(figsize=(4, 3), dpi=128)
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.plot(logistic_fpr, logistic_tpr, label='Logistic 1 (auc = %0.3f)' % auc_logistic)
+plt.figure(figsize=(8, 6), dpi=100)
+plt.title('ROC Curve Analysis', fontsize=16, fontweight='bold')
+plt.xlabel('False Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.ylabel('True Positive Rate', fontsize=13, fontweight='bold', labelpad=12)
+plt.plot(logistic_fpr, logistic_tpr, label='Logistic 1 (AUC = %0.3f)' % auc_logistic, color=palette[0])
 plt.legend()
 plt.show()
 
@@ -118,10 +121,11 @@ auc_logistic = auc(logistic_fpr, logistic_tpr)
 logistic_auc_score = roc_auc_score(y_test, y_pred_decf)
 print(f'Logistic (Iter Impute Method 2) AUC Score: {logistic_auc_score}')
 
-plt.figure(figsize=(4, 3), dpi=128)
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.plot(logistic_fpr, logistic_tpr, label='Logistic (auc = %0.3f)' % auc_logistic)
+plt.figure(figsize=(8, 6), dpi=100)
+plt.title('ROC Curve Analysis', fontsize=16, fontweight='bold')
+plt.xlabel('False Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.ylabel('True Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.plot(logistic_fpr, logistic_tpr, label='Logistic Method 2 (AUC = %0.3f)' % auc_logistic, color=palette[1])
 plt.legend()
 plt.show()
 
@@ -148,10 +152,11 @@ auc_decision = auc(decision_fpr, decision_tpr)  # (roc and auc only function wit
 decision_auc_score = roc_auc_score(y_test, y_pred_probs[:, 1])  # again, only select P(x = positive class)
 print(f'Decision Tree AUC Score: {decision_auc_score}')
 
-plt.figure(figsize=(4, 3), dpi=128)
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.plot(decision_fpr, decision_tpr, label='Decision (auc = %0.3f)' % auc_decision)
+plt.figure(figsize=(8, 6), dpi=100)
+plt.title('ROC Curve Analysis', fontsize=16, fontweight='bold')
+plt.xlabel('False Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.ylabel('True Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.plot(decision_fpr, decision_tpr, label='Decision Tree(AUC = %0.3f)' % auc_decision, color=palette[2])
 plt.legend()
 plt.show()
 
@@ -178,23 +183,24 @@ random_forest_auc_score = roc_auc_score(y_test, y_pred_probs)
 print(f'Random Forest AUC Score: {random_forest_auc_score}')
 
 # PLOTTING
-plt.figure(figsize=(4, 3), dpi=128)
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.plot(random_forest_fpr, random_forest_tpr, label='Random Forest (auc = %0.3f)' % auc_random_forest)
+plt.figure(figsize=(8, 6), dpi=100)
+plt.title('ROC Curve Analysis', fontsize=16, fontweight='bold')
+plt.xlabel('False Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.ylabel('True Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.plot(random_forest_fpr, random_forest_tpr, label='Random Forest (AUC = %0.3f)' % auc_random_forest, color=palette[3])
 plt.legend()
 plt.show()
 
 """
 8. BAGGING CLASSIFIER - TESTING N-ESTIMATORS
 """
-
-# SPLIT
+#
+# # SPLIT
 # y = data_iter_imp.iloc[:, 0]
 # X = data_iter_imp.iloc[:, 1:]
 # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 #
-# # making a range of the size of the ensemble to compare scores
+# # create range = ensemble size to compare scores
 # estimator_range = np.arange(60, 500, 20)
 # models = []
 # scores = []
@@ -206,11 +212,11 @@ plt.show()
 #     scores.append(accuracy_score(y_true=y_test, y_pred=clf.predict(X_test)))
 #
 # # Accuracy score vs n estimators
-# plt.figure(figsize=(9, 6))
-# plt.plot(estimator_range, scores)
-# plt.xlabel("n_estimators", fontsize=18)
-# plt.ylabel("score", fontsize=18)
-# plt.tick_params(labelsize=16)
+# plt.figure(figsize=(8, 6), dpi=100)
+# plt.plot(estimator_range, scores, color=palette[6])
+# plt.title('Accuracy vs N-Estimators', fontsize=16, fontweight='bold')
+# plt.xlabel("n_estimators", fontsize=13, fontweight='bold',labelpad=12)
+# plt.ylabel("score", fontsize=13, fontweight='bold',labelpad=12)
 # plt.show()
 
 """
@@ -241,15 +247,36 @@ auc_bagging = auc(bagging_fpr, bagging_tpr)  # (roc and auc only function with t
 bagging_auc_score = roc_auc_score(y_test, y_pred_probs[:, 1])  # again, only select P(x = positive class)
 print(f'Bagging Classifier AUC Score: {bagging_auc_score}')
 
-plt.figure(figsize=(4, 3), dpi=128)
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.plot(bagging_fpr, bagging_tpr, label='Bagging (auc = %0.3f)' % auc_bagging)
+plt.figure(figsize=(8, 6), dpi=100)
+plt.title('ROC Curve Analysis', fontsize=16, fontweight='bold')
+plt.xlabel('False Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.ylabel('True Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.plot(bagging_fpr, bagging_tpr, label='Bagging Classifier(AUC = %0.3f)' % auc_bagging, color=palette[4])
+
+
 plt.legend()
 plt.show()
 
+
 """
-10. FINAL PREDICTIONS
+10. FINAL COMPARISON
+"""
+plt.figure(figsize=(8, 6), dpi=100)
+plt.title('ROC Curve Analysis', fontsize=16, fontweight='bold')
+plt.xlabel('False Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.ylabel('True Positive Rate', fontsize=13, fontweight='bold',labelpad=12)
+plt.plot(bagging_fpr, bagging_tpr, label='Bagging Classifier(AUC = %0.3f)' % auc_bagging, color=palette[4])
+plt.plot(random_forest_fpr, random_forest_tpr, label='Random Forest (AUC = %0.3f)' % auc_random_forest, color=palette[3])
+plt.plot(decision_fpr, decision_tpr, label='Decision Tree(AUC = %0.3f)' % auc_decision, color=palette[2])
+plt.plot(logistic_fpr, logistic_tpr, label='Logistic Method 2 (AUC = %0.3f)' % auc_logistic, color=palette[1])
+plt.legend()
+plt.show()
+
+
+
+
+"""
+11. FINAL PREDICTIONS USING RANDOM FOREST
 """
 
 # ITER IMPUTE ON TARGET INPUT DATA
@@ -267,4 +294,4 @@ submission_df = pd.DataFrame({
     "Probability": y_pred_final
 })
 
-submission_df.to_csv(r'C:\Users\koko\Desktop\ML\Credit_24\Submissions\submission.csv', index=False)
+submission_df.to_csv(r'C:\Users\koko\Desktop\ML\Credit_24\Submissions\final_submission_group26.csv', index=False)
