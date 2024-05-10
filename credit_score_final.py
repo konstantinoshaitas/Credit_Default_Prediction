@@ -63,7 +63,7 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.fit_transform(X_test)
 
-# MODEL LOG 1
+# LOGISTIC MODEL 1
 model_l = LogisticRegression()  # model selection
 model_l.fit(X_train, y_train)  # train logistic regression on train
 y_pred = model_l.predict(X_test)  # predict on test data
@@ -101,7 +101,7 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.fit_transform(X_test)
 
-# MODEL LOG2
+# LOGISTIC MODEL 2
 
 model_l2 = LogisticRegression()  # model selection
 model_l2.fit(X_train, y_train)  # train logistic regression on train
