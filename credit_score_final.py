@@ -248,12 +248,11 @@ plt.plot(bagging_fpr, bagging_tpr, label='Bagging (auc = %0.3f)' % auc_bagging)
 plt.legend()
 plt.show()
 
-
 """
 10. FINAL PREDICTIONS
 """
 
-#ITER IMPUTE ON TARGET INPUT DATA
+# ITER IMPUTE ON TARGET INPUT DATA
 df_predictions = df_predictions.drop(columns="Unnamed: 0")
 df_predictions.columns = df_predictions.columns.str.lower()
 iter_imp = IterativeImputer(max_iter=20, random_state=0)  # initializing IterativeImputer
@@ -263,12 +262,9 @@ df_predictions_imputed = pd.DataFrame(imp_df, columns=df_predictions.columns)
 
 y_pred_final = model_rf.predict_proba(df_predictions_imputed)[:, 1]
 
-
 submission_df = pd.DataFrame({
     "Id": range(len(y_pred_final)),
     "Probability": y_pred_final
 })
 
-
 submission_df.to_csv(r'C:\Users\koko\Desktop\ML\Credit_24\Submissions\submission.csv', index=False)
-
