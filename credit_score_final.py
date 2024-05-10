@@ -84,76 +84,76 @@ plt.ylabel('True Positive Rate')
 plt.plot(logistic_fpr, logistic_tpr, label='Logistic 1 (auc = %0.3f)' % auc_logistic)
 plt.legend()
 plt.show()
-#
-# """
-# 5. LOGISTIC MODEL - ITER IMPUTE (METHOD 2)
-# """
-#
-# # SPLIT METHOD 2 (TRAIN - TEST)
-#
-# y = data_iter_imp.iloc[:, 0]
-# X = data_iter_imp.iloc[:, 1:]
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
-#
-# # NORMALISATION
-#
-# scaler = StandardScaler()
-# X_train = scaler.fit_transform(X_train)
-# X_test = scaler.fit_transform(X_test)
-#
-# # MODEL LOG2
-#
-# model_l2 = LogisticRegression()  # model selection
-# model_l2.fit(X_train, y_train)  # train logistic regression on train
-# y_pred = model_l2.predict(X_test)  # predict on test data
-# y_pred_decf = model_l2.decision_function(X_test)  # decision function - necessary for roc_auc_score
-#
-# # TESTING (ACCURACY, ROC_CURVE AND ROC_AUC_SCORE)
-#
-# print(f'Accuracy Score Logistic 2:', accuracy_score(y_test, y_pred))  # accuracy score = % of correct predictions
-#
-# logistic_fpr, logistic_tpr, threshold = roc_curve(y_test, y_pred_decf)
-# # fpr = false positive rate, tpr = true positive rate
-# auc_logistic = auc(logistic_fpr, logistic_tpr)
-# logistic_auc_score = roc_auc_score(y_test, y_pred_decf)
-# print(f'Logistic (Iter Impute Method 2) AUC Score: {logistic_auc_score}')
-#
-# plt.figure(figsize=(4, 3), dpi=128)
-# plt.xlabel('False Positive Rate')
-# plt.ylabel('True Positive Rate')
-# plt.plot(logistic_fpr, logistic_tpr, label='Logistic (auc = %0.3f)' % auc_logistic)
-# plt.legend()
-# plt.show()
-#
-# """
-# 6. DECISION TREE MODEL
-# """
-#
-# # SPLIT
-# y = data_iter_imp.iloc[:, 0]
-# X = data_iter_imp.iloc[:, 1:]
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
-#
-# # DECISION TREE MODEL
-# model_dt = DecisionTreeClassifier()
-# model_dt.fit(X_train, y_train)
-# y_pred = model_dt.predict(X_test)
-# y_pred_probs = model_dt.predict_proba(X_test)  # NOTE: output = 2dim array
-# # NOTE: column 0 = P(x=0), column 1 = P(x=1)
-#
-# # TESTING (ACCURACY, ROC_CURVE AND ROC_AUC_SCORE)
-# print(f'Accuracy Score Decision Tree:', accuracy_score(y_test, y_pred))  # accuracy score = % of correct predictions
-# decision_fpr, decision_tpr, threshold = roc_curve(y_test, y_pred_probs[:, 1])
-# auc_decision = auc(decision_fpr, decision_tpr)  # (roc and auc only function with the positive class probabilities)
-# decision_auc_score = roc_auc_score(y_test, y_pred_probs[:, 1])  # again, only select P(x = positive class)
-# print(f'Decision Tree AUC Score: {decision_auc_score}')
-#
-# plt.figure(figsize=(4, 3), dpi=128)
-# plt.xlabel('False Positive Rate')
-# plt.ylabel('True Positive Rate')
-# plt.plot(decision_fpr, decision_tpr, label='Decision (auc = %0.3f)' % auc_decision)
-# plt.legend()
-# plt.show()
+
+"""
+5. LOGISTIC MODEL - ITER IMPUTE (METHOD 2)
+"""
+
+# SPLIT METHOD 2 (TRAIN - TEST)
+
+y = data_iter_imp.iloc[:, 0]
+X = data_iter_imp.iloc[:, 1:]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+
+# NORMALISATION
+
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.fit_transform(X_test)
+
+# MODEL LOG2
+
+model_l2 = LogisticRegression()  # model selection
+model_l2.fit(X_train, y_train)  # train logistic regression on train
+y_pred = model_l2.predict(X_test)  # predict on test data
+y_pred_decf = model_l2.decision_function(X_test)  # decision function - necessary for roc_auc_score
+
+# TESTING (ACCURACY, ROC_CURVE AND ROC_AUC_SCORE)
+
+print(f'Accuracy Score Logistic 2:', accuracy_score(y_test, y_pred))  # accuracy score = % of correct predictions
+
+logistic_fpr, logistic_tpr, threshold = roc_curve(y_test, y_pred_decf)
+# fpr = false positive rate, tpr = true positive rate
+auc_logistic = auc(logistic_fpr, logistic_tpr)
+logistic_auc_score = roc_auc_score(y_test, y_pred_decf)
+print(f'Logistic (Iter Impute Method 2) AUC Score: {logistic_auc_score}')
+
+plt.figure(figsize=(4, 3), dpi=128)
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.plot(logistic_fpr, logistic_tpr, label='Logistic (auc = %0.3f)' % auc_logistic)
+plt.legend()
+plt.show()
+
+"""
+6. DECISION TREE MODEL
+"""
+
+# SPLIT
+y = data_iter_imp.iloc[:, 0]
+X = data_iter_imp.iloc[:, 1:]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+
+# DECISION TREE MODEL
+model_dt = DecisionTreeClassifier()
+model_dt.fit(X_train, y_train)
+y_pred = model_dt.predict(X_test)
+y_pred_probs = model_dt.predict_proba(X_test)  # NOTE: output = 2dim array
+# NOTE: column 0 = P(x=0), column 1 = P(x=1)
+
+# TESTING (ACCURACY, ROC_CURVE AND ROC_AUC_SCORE)
+print(f'Accuracy Score Decision Tree:', accuracy_score(y_test, y_pred))  # accuracy score = % of correct predictions
+decision_fpr, decision_tpr, threshold = roc_curve(y_test, y_pred_probs[:, 1])
+auc_decision = auc(decision_fpr, decision_tpr)  # (roc and auc only function with the positive class probabilities)
+decision_auc_score = roc_auc_score(y_test, y_pred_probs[:, 1])  # again, only select P(x = positive class)
+print(f'Decision Tree AUC Score: {decision_auc_score}')
+
+plt.figure(figsize=(4, 3), dpi=128)
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.plot(decision_fpr, decision_tpr, label='Decision (auc = %0.3f)' % auc_decision)
+plt.legend()
+plt.show()
 
 """
 7. RANDOM FOREST MODEL
@@ -218,35 +218,35 @@ SEGMENT COMMENTED FOR RUNTIME
 """
 
 """
-9. BAGGING CLASSIFIER MODEL - FINAL
+9. BAGGING CLASSIFIER MODEL
 """
-#
-# # SPLIT
-# y = data_iter_imp.iloc[:, 0]
-# X = data_iter_imp.iloc[:, 1:]
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
-#
-# # BAGGING CLASSIFIER MODEL
-# model_bag = BaggingClassifier(n_estimators=400)
-# model_bag.fit(X_train, y_train)
-# y_pred = model_bag.predict(X_test)
-# y_pred_probs = model_bag.predict_proba(X_test)  # output = 2-dim array
-# # Column 1 = Prob(x=0) Column 2 = Prob(x=1)
-#
-#
-# # TESTING (ACCURACY, ROC_CURVE AND ROC_AUC_SCORE)
-# print(f'Accuracy Score Bagging:', accuracy_score(y_test, y_pred))  # accuracy score = % of correct predictions
-# bagging_fpr, bagging_tpr, threshold = roc_curve(y_test, y_pred_probs[:, 1])  # select P(x = positive class)
-# auc_bagging = auc(bagging_fpr, bagging_tpr)  # (roc and auc only function with the positive class probabilities)
-# bagging_auc_score = roc_auc_score(y_test, y_pred_probs[:, 1])  # again, only select P(x = positive class)
-# print(f'Bagging Classifier AUC Score: {bagging_auc_score}')
-#
-# plt.figure(figsize=(4, 3), dpi=128)
-# plt.xlabel('False Positive Rate')
-# plt.ylabel('True Positive Rate')
-# plt.plot(bagging_fpr, bagging_tpr, label='Bagging (auc = %0.3f)' % auc_bagging)
-# plt.legend()
-# plt.show()
+
+# SPLIT
+y = data_iter_imp.iloc[:, 0]
+X = data_iter_imp.iloc[:, 1:]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+
+# BAGGING CLASSIFIER MODEL
+model_bag = BaggingClassifier(n_estimators=400)
+model_bag.fit(X_train, y_train)
+y_pred = model_bag.predict(X_test)
+y_pred_probs = model_bag.predict_proba(X_test)  # output = 2-dim array
+# Column 1 = Prob(x=0) Column 2 = Prob(x=1)
+
+
+# TESTING (ACCURACY, ROC_CURVE AND ROC_AUC_SCORE)
+print(f'Accuracy Score Bagging:', accuracy_score(y_test, y_pred))  # accuracy score = % of correct predictions
+bagging_fpr, bagging_tpr, threshold = roc_curve(y_test, y_pred_probs[:, 1])  # select P(x = positive class)
+auc_bagging = auc(bagging_fpr, bagging_tpr)  # (roc and auc only function with the positive class probabilities)
+bagging_auc_score = roc_auc_score(y_test, y_pred_probs[:, 1])  # again, only select P(x = positive class)
+print(f'Bagging Classifier AUC Score: {bagging_auc_score}')
+
+plt.figure(figsize=(4, 3), dpi=128)
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.plot(bagging_fpr, bagging_tpr, label='Bagging (auc = %0.3f)' % auc_bagging)
+plt.legend()
+plt.show()
 
 
 """
