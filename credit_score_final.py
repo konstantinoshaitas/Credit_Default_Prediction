@@ -297,4 +297,4 @@ submission_df = pd.DataFrame({
     "Probability": y_pred_final
 })
 
-submission_df.to_csv(r'C:\Users\koko\Desktop\ML\Credit_24\Submissions\final_submission_group26.csv', index=False)
+submission_df.to_csv(r'C:\Users\koko\Desktop\ML\Credit_24\Submissions\final_predictions.csv', index=False)
